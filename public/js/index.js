@@ -89,7 +89,7 @@ function sendTransaction(isAdding) {
     return;
   }
   else {
-    errorEl.textContent = "";
+    errorEl.textContent = "Data added!";
   }
 
   // create record
