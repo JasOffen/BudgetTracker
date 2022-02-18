@@ -30,16 +30,6 @@ self.addEventListener("install", function(event) {
     })
   );
 });
-//Event listener to activate the service-worker
-self.addEventListener('activate', function(event){
-  event.waitUntil(
-    caches.keys().then(function (keyList){
-      let cacheKeeplist = keyList.filter(function (key){
-        return key.index.of(APP_PREFIX)
-      })
-    })
-  )
-})
 
 // Respond with cached resources
 self.addEventListener("fetch", function(event) {
