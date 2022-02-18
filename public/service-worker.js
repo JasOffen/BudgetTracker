@@ -33,7 +33,7 @@ self.addEventListener("install", function(event) {
 //Event listener to activate the service-worker
 self.addEventListener('activate', function(event){
   event.waitUntil(
-    cache.keys().then(function (keyList){
+    caches.keys().then(function (keyList){
       let cacheKeeplist = keyList.filter(function (key){
         return key.index.of(APP_PREFIX)
       })
