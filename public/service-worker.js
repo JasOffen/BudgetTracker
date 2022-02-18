@@ -30,6 +30,26 @@ self.addEventListener("install", function(event) {
     })
   );
 });
+//Event listener to activate the service-worker
+self.addEventListener('activate', function(event){
+  event.waitUntil(
+    caches.keys().then(function (keyList){
+      let cacheKeeplist = keyList.filter(function (key){
+        return key.index.of(APP_PREFIX)
+      })
+      cacheKeeplist.push(CACHE_NAME);
+
+      return Promise.all(
+        keyList.map(function (key, i) {
+          if (cacheKeeplist.indexOf(key) === -1) {
+            console.log("deleting cache : " + keyList[i]);
+            return caches.delete(keyList[i]);
+          }
+        })
+      );
+    })
+  )
+})
 
 // Respond with cached resources
 self.addEventListener("fetch", function(event) {
@@ -71,7 +91,7 @@ self.addEventListener("fetch", function(event) {
 });
 
 // Delete outdated caches
-self.addEventListener('activate', function (e) {
+self.addEventListener('fetch', function (e) {
   e.waitUntil(
     caches.keys().then(function (keyList) {
       // `keyList` contains all cache names under your username.github.io
